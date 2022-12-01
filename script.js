@@ -13,10 +13,8 @@ queryInputElem.addEventListener('keyup', async function(ev) {
         `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${queryInputElem.value}`);
       const searchResultsJson = await searchResults.json();
 
-      let instructions = document.createElement('div');
-      instructions.classList.add('instruction');
-      instructions.append('Click on an ingredient to view its nutrition facts');
-      resultsElem.append(instructions);
+      clearResultsElem();
+      createInstructions();
 
       for (let i = 0; i < 10; i++) {
         let drinkElem = await createDrinkElem(searchResultsJson.drinks[i]);
@@ -27,7 +25,6 @@ queryInputElem.addEventListener('keyup', async function(ev) {
 
 async function createDrinkElem(drink) {
   let drinkElem = document.createElement('div');
-  // let instructions = document.createElement('div');
   let drinkName = document.createElement('h2');
   let ingredientList = document.createElement('ol');
   let ingredient1 = document.createElement('li');
@@ -38,14 +35,11 @@ async function createDrinkElem(drink) {
   let recipe = document.createElement('div')
 
   drinkElem.classList.add('result');
-  // drinkElem.appendChild(instructions);
   drinkElem.appendChild(drinkName);
   drinkElem.appendChild(ingredientList);
   drinkElem.appendChild(recipe);
   recipe.classList.add('recipe');
-  // instructions.classList.add('instruction');
 
-  // instructions.append('Click on ingredient to view nutrition facts');
   drinkName.append(drink.strDrink);
   ingredient1.append(drink.strIngredient1);
   ingredient2.append(drink.strIngredient2);
@@ -103,3 +97,17 @@ async function createIngredientFacts(drink, ingredient, query) {
     ingredient.appendChild(facts);
   });
 }
+
+function createInstructions() {
+  let instructions = document.createElement('div');
+  instructions.classList.add('instruction');
+  instructions.append('Click on an ingredient to view its nutrition facts');
+  resultsElem.append(instructions);
+}
+
+function clearResultsElem() {
+  Array.from(resultsElem.childNodes).forEach((child) => {
+    child.remove();
+  });
+}
+
