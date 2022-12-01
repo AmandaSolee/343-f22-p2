@@ -1,24 +1,22 @@
 const queryInputElem = document.getElementById('query');
 const resultsElem = document.getElementById("results");
-
 const form = document.getElementById('form');
 
-form.addEventListener('submit', (event) => {
-  console.log('submitting');
-  event.preventDefault();
+form.addEventListener('submit', (ev) => {
+  ev.preventDefault();
 })
 
-console.log("query ", queryInputElem);
 queryInputElem.addEventListener('keyup', async function(ev) {
     ev.preventDefault();
     if (ev.key == 'Enter') {
       const searchResults = await fetch(
         `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${queryInputElem.value}`);
-        const searchResultsJson = await searchResults.json();
-        console.log(searchResultsJson);
+      const searchResultsJson = await searchResults.json();
 
-        const drinkElem = await createDrinkElem(searchResultsJson.drinks[0]);
+      for (let i = 0; i < 10; i++) {
+        let drinkElem = await createDrinkElem(searchResultsJson.drinks[i]);
         resultsElem.append(drinkElem);
+      }
     }
 });
 
@@ -61,46 +59,40 @@ async function createDrinkElem(drink) {
   createIngredientFacts(drink, ingredient4, drink.strIngredient4);
   createIngredientFacts(drink, ingredient5, drink.strIngredient5);
 
-
   return drinkElem;
 }
 
 async function createIngredientFacts(drink, ingredient, query) {
-  // console.log("ingredient ", ingredient);
-  ingredient.addEventListener('click', async function(ev) {
+    ingredient.addEventListener('click', async function(ev) {
     ev.preventDefault();
-      console.log('pressed ingredient')
-      // let query = drink.strIngredient1;
-      const searchResults = await fetch( `https://api.api-ninjas.com/v1/nutrition?query=${query}`, {
-        headers: { 'X-Api-Key': 'Rg1XBHQzobg1UdIvggDOdg==qariUu4zTlLnqmBN'},
-        contentType: 'application/json'
-      });
-      const searchResultsJson = await searchResults.json();
-      console.log(searchResultsJson);
-      console.log(searchResultsJson[0].name);
+    const searchResults = await fetch( `https://api.api-ninjas.com/v1/nutrition?query=${query}`, {
+      headers: { 'X-Api-Key': 'Rg1XBHQzobg1UdIvggDOdg==qariUu4zTlLnqmBN'},
+      contentType: 'application/json'
+    });
+    const searchResultsJson = await searchResults.json();
 
-      let facts = document.createElement('ul');
-      let serving = document.createElement('li');
-      let calories = document.createElement('li');
-      let carbs = document.createElement('li');
-      let fat = document.createElement('li');
-      let protein = document.createElement('li');
-      let sugar = document.createElement('li');
+    let facts = document.createElement('ul');
+    let serving = document.createElement('li');
+    let calories = document.createElement('li');
+    let carbs = document.createElement('li');
+    let fat = document.createElement('li');
+    let protein = document.createElement('li');
+    let sugar = document.createElement('li');
 
-      facts.appendChild(serving);
-      facts.appendChild(calories);
-      facts.appendChild(carbs);
-      facts.appendChild(fat);
-      facts.appendChild(protein);
-      facts.appendChild(sugar);
-      
-      serving.append(`Serving size: ${searchResultsJson[0].serving_size_g} grams`);
-      calories.append(`Calories: ${searchResultsJson[0].calories}`);
-      carbs.append(`Carbohydrates: ${searchResultsJson[0].carbohydrates_total_g} grams`);
-      fat.append(`Fats: ${searchResultsJson[0].fat_total_g} grams`);
-      protein.append(`Protein: ${searchResultsJson[0].protein_g} grams`);
-      sugar.append(`Sugar: ${searchResultsJson[0].sugar_g} grams`);
+    facts.appendChild(serving);
+    facts.appendChild(calories);
+    facts.appendChild(carbs);
+    facts.appendChild(fat);
+    facts.appendChild(protein);
+    facts.appendChild(sugar);
+    
+    serving.append(`Serving size: ${searchResultsJson[0].serving_size_g} grams`);
+    calories.append(`Calories: ${searchResultsJson[0].calories}`);
+    carbs.append(`Carbohydrates: ${searchResultsJson[0].carbohydrates_total_g} grams`);
+    fat.append(`Fats: ${searchResultsJson[0].fat_total_g} grams`);
+    protein.append(`Protein: ${searchResultsJson[0].protein_g} grams`);
+    sugar.append(`Sugar: ${searchResultsJson[0].sugar_g} grams`);
 
-      ingredient.appendChild(facts);
+    ingredient.appendChild(facts);
   });
 }

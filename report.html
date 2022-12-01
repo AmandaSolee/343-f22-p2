@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+</head>
+<body>
+    <h1>Report Page</h1>
+
+    <div>
+        <h2>Functionality:</h2>
+        <ul>
+            <li>Allows user to search for a cocktail by name</li>
+            <li>If cocktail exists in database the user will be shown
+                the name of the cocktail.
+            </li>
+            <li>The user will also see an ordered list of 
+                the first five ingredients need for cocktail which is 
+                followed by basic instructions to create the cocktail.
+            </li>
+            <li>The user can also click on the five ingredients and see
+                specific nutrition facts about each individual ingredient
+                in the cocktail
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        <h2>Requirements:</h2>
+        <ul>
+            <li>deploy site
+                <ul><li>
+                    Link to deployed version of app:
+                    <a href="https://amandasolee.github.io/343-f22-p2/">https://amandasolee.github.io/343-f22-p2/</a>
+                </li></ul>
+            </li>
+            <li style= 'color: red'>is responsive
+            </li>
+            <li>uses 2 different apis
+                <ul>
+                    <li>Uses The CocktailDB to get information of cocktails user searches for. 
+                        <a href="https://www.thecocktaildb.com/api.php">https://www.thecocktaildb.com/api.php</a>
+                    </li>
+                    <li>Uses API Ninjas Nutrition API to get all nutrition facts for 
+                        various ingredients of cocktails.
+                        <a href="https://api-ninjas.com/api/nutrition">https://api-ninjas.com/api/nutrition</a>
+                    </li>
+                </ul>
+            </li>
+            <li>has search
+                <ul>
+                    <li>Application asks user to type in a cocktail and the application searches
+                        through the cocaktail database. Looks through the database for any results that 
+                        contain the name of the cocktail the user searched for.
+                    </li>
+                </ul>
+            </li>
+            <li>displays results
+                <ul>
+                    <li>The application shows the first ten results of cocktails in the cocktail database 
+                        that match what the user searches for. The results incluse the name of the cocktail 
+                        along with the first five ingredients and basic instructions to create the cocktail.
+                    </li>
+                </ul>
+            </li>
+            <li style="color: red">results are filterable</li>
+        </ul>
+    </div>
