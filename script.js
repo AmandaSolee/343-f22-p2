@@ -37,6 +37,7 @@ async function createDrinkElem(drink) {
   drinkElem.appendChild(drinkName);
   drinkElem.appendChild(ingredientList);
   drinkElem.appendChild(recipe);
+  recipe.classList.add('recipe');
 
   instructions.append('Click on ingredient to view nutrition facts');
   drinkName.append(drink.strDrink);
