@@ -14,6 +14,7 @@ queryInputElem.addEventListener('keyup', async function(ev) {
       const searchResultsJson = await searchResults.json();
 
       clearResultsElem();
+      createFilterButtons();
       createInstructions();
 
       for (let i = 0; i < 10; i++) {
@@ -32,9 +33,8 @@ async function createDrinkElem(drink) {
   let ingredient3 = document.createElement('li');
   let ingredient4 = document.createElement('li');
   let ingredient5 = document.createElement('li');
-  let recipe = document.createElement('div')
+  let recipe = document.createElement('div');
 
-  drinkElem.classList.add('result');
   drinkElem.appendChild(drinkName);
   drinkElem.appendChild(ingredientList);
   drinkElem.appendChild(recipe);
@@ -54,16 +54,16 @@ async function createDrinkElem(drink) {
   ingredientList.appendChild(ingredient4);
   ingredientList.appendChild(ingredient5);
 
-  createIngredientFacts(drink, ingredient1, drink.strIngredient1);
-  createIngredientFacts(drink, ingredient2, drink.strIngredient2);
-  createIngredientFacts(drink, ingredient3, drink.strIngredient3);
-  createIngredientFacts(drink, ingredient4, drink.strIngredient4);
-  createIngredientFacts(drink, ingredient5, drink.strIngredient5);
+  createIngredientFacts(ingredient1, drink.strIngredient1);
+  createIngredientFacts(ingredient2, drink.strIngredient2);
+  createIngredientFacts(ingredient3, drink.strIngredient3);
+  createIngredientFacts(ingredient4, drink.strIngredient4);
+  createIngredientFacts(ingredient5, drink.strIngredient5);
 
   return drinkElem;
 }
 
-async function createIngredientFacts(drink, ingredient, query) {
+async function createIngredientFacts(ingredient, query) {
     ingredient.addEventListener('click', async function(ev) {
     ev.preventDefault();
     const searchResults = await fetch( `https://api.api-ninjas.com/v1/nutrition?query=${query}`, {
@@ -111,3 +111,60 @@ function clearResultsElem() {
   });
 }
 
+function createFilterButtons() {
+  let filters = document.createElement('div');
+  let less5 = document.createElement('button');
+  let greater5 = document.createElement('button');
+
+  less5.type = "button";
+  greater5.type = "button";
+
+  filters.append('Options to filter results: ');
+  less5.append('less than 5 ingredients');
+  greater5.append('greater than 5 ingredients');
+
+  less5.classList.add('filter');
+  greater5.classList.add('filter');
+
+  filters.append(less5);
+  filters.append(greater5);
+  resultsElem.append(filters);
+
+  less5.addEventListener('click', async function(ev) {
+    clearResultsElem();
+    createFilterButtons();
+    createInstructions();
+
+    const searchResults = await fetch(
+      `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${queryInputElem.value}`);
+    const searchResultsJson = await searchResults.json();
+    console.log(searchResultsJson);
+
+    for (let i = 0; i < 10; i++) {
+      if (searchResultsJson.drinks[i].strIngredient5 == null) {
+        let drinkElem = await createDrinkElem(searchResultsJson.drinks[i]);
+        resultsElem.append(drinkElem);
+      }
+    }
+  });
+
+  greater5.addEventListener('click', async function(ev) {
+    clearResultsElem();
+    createFilterButtons();
+    createInstructions();
+
+    const searchResults = await fetch(
+      `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${queryInputElem.value}`);
+    const searchResultsJson = await searchResults.json();
+    console.log(searchResultsJson);
+
+    for (let i = 0; i < 10; i++) {
+      if (searchResultsJson.drinks[i].strIngredient5 != null) {
+        let drinkElem = await createDrinkElem(searchResultsJson.drinks[i]);
+        resultsElem.append(drinkElem);
+      }
+    }
+  });
+
+
+}

@@ -8,6 +8,10 @@ h1, h2 {
     color:rgb(192, 64, 0);
 }
 
+input {
+    font-size: 12pt;
+}
+
 .recipe {
     max-width: 1200px;
 }
@@ -16,6 +20,13 @@ h1, h2 {
     margin-top: 20px;
     font-weight: bold;
     font-size: 15pt;
+}
+
+.filter {
+    margin: 10px;
+    background-color:burlywood;
+    font-size: 12pt;
+    border-radius: 5px;
 }
 
 @media screen and (max-width: 1250px) {
